@@ -14,6 +14,7 @@ import { DatePipe } from '@angular/common';
 import { HistoryComponent } from './history/history.component';
 import { FilterPipe } from './bankpipes/filter.pipe';
 import { DeleteComponent } from './delete/delete.component';
+import { MainComponent } from './main/main.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { DeleteComponent } from './delete/delete.component';
     LoginComponent,
     HistoryComponent,
     FilterPipe,
-    DeleteComponent
+    DeleteComponent,
+    MainComponent
   ],
   imports: [
     BrowserModule,
