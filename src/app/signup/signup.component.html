@@ -1,0 +1,47 @@
+
+<div class="container w-100 text-center row mx-auto" >
+    <div class="form-container col-md-6">
+        <h1>signup</h1>
+        <form [formGroup]="signupForm" class="bg-light mt-5 p-3 login-form" action="">
+            <div class="mt-2 p-2">
+            
+                <label for="p1"></label>
+                <input formControlName="acno" type="text" id="p1"name="acno" class="form-control" placeholder="enter acno" >
+            </div>            
+            <div *ngIf="this.signupForm.get('acno')?.errors&& this.signupForm.get('acno')?.touched">
+                <p class="text-danger">Accept only numbers</p>
+            </div>
+            <div class="mt-2 p-2">
+                <label for="p2"></label>
+                <input formControlName="uname"  id="p2" name="uname" class="form-control" placeholder="username">
+            </div>
+            <div  *ngIf="this.signupForm.get('acno')?.errors&& this.signupForm.get('acno')?.touched">
+                <p class="text-danger">Please include characters only</p>
+            </div>
+
+            <div class="mt-2 p-2">
+                <label for="p2"></label>
+                <input formControlName="psw"  type="password" id="p2" name="psw" class="form-control" placeholder="enter password">
+            </div>
+            <div  *ngIf="this.signupForm.get('acno')?.errors&& this.signupForm.get('acno')?.touched">
+                <p class="text-danger">Please include characters and numbers</p>
+            </div>
+
+            <div class="mt-2 p-2">
+                <label for="p2"></label>
+                <input formControlName="cpsw"  type="password" id="p2" name="cpsw" class="form-control" placeholder="confirm password">
+            </div>
+            <div  *ngIf="pswCheck">
+                <p class="text-danger">Please include characters and numbers</p>
+            </div>
+
+            <div class="mt-2 P-2">
+                <button (click)="signup()" class="btn btn-success" type="submit">signup</button>
+                <button class="btn btn-danger ms-3">cancel</button>
+            </div>
+        </form>
+    </div>
+    <div class="image-container col-md-6">
+        <img src="./../../assets/bank.jpg" class="image" />
+    </div>
+</div>

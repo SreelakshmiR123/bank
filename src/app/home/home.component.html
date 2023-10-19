@@ -1,0 +1,176 @@
+<nav ngClass="dAcno?'c2':''" class="navbar sticky-top navbar-expand-lg navbar-dark bg-dark">
+  <div class="container">
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a (click)="getbalance()" class="nav-link ms-5" aria-current="page" data-bs-toggle="modal"
+            data-bs-target="#blanceCheck">
+            Balance Check</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link ms-5" aria-current="page" data-bs-toggle="offcanvas"
+            data-bs-target="#moneyTransferOffcanvas" role="button" aria-controls="moneyTransferOffcanvas">Money
+            Transfer</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link ms-5" aria-current="page" routerLink="/history">Account Statements</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="fa-solid fa-user"></i>
+          </a>
+
+          <ul class="dropdown-menu">
+            <li (click)="getProfile()" data-bs-toggle="modal" data-bs-target="#profileModal" style="cursor: pointer;">
+              <a
+                class="dropdown-item text-info">Profile View</a></li>
+            <li (click)="deleteConfirm()" style="cursor: pointer;"><a class="dropdown-item text-info">Delete Account</a></li>
+
+            <li (click)="logout()" style="cursor: pointer;"><a class="dropdown-item text-info">Logout</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="container">
+  <div class="d-flex justify-content-center">
+    <img
+      src="https://img.freepik.com/premium-vector/online-banking-technology-concept-illustration-bank-electric-circuit-lines-background_387612-43.jpg"
+      class="img-fluid" alt="...">
+  </div>
+</div>
+
+<app-delete [data]="dAcno" (onCancel)="cancelp()" (onProceed)="delete()"></app-delete>
+
+<!---modal  balance--->
+
+<div class="modal fade" id="blanceCheck" tabindex="-1" aria-labelledby="blanceCheckLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header bg-secondary">
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body bg-dark text-white">
+        <h3 class="modal-title fs-5" id="blanceCheckLabel">Hello <span class="text-info">{{name}}</span></h3>
+        <div class="text-center mb-3">
+          <img class="w-75"
+            src="https://plus.unsplash.com/premium_photo-1681298434224-4c559463db47?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80">
+        </div>
+        <h6> The current available balance in account Number
+          <strong class="text-info">{{acno}}</strong>
+        </h6>
+        <h4><span class="text-info">RS-{{balance}}</span>Only</h4>
+
+      </div>
+      <div class="modal-footer bg-dark">
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!---money transfer-->
+
+<div class="offcanvas offcanvas-start" tabindex="-1" id="moneyTransferOffcanvas"
+  aria-labelledby="moneyTransferOffcanvasLabel">
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title" id="offcanvasLabel">money Transfer</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body">
+    <div>
+      <img style="height: 250px; ;"
+        src="https://cdn.vectorstock.com/i/1000x1000/11/56/money-transfer-using-mobile-device-computer-vector-30011156.webp"
+        alt="">
+    </div>
+    <div class="text-center p-5">
+      <h4 [ngClass]="msgClr?'s1':'s2'">{{message}}</h4>
+    </div>
+    <form [formGroup]="moneyTransferForm" action="">
+      <input formControlName="rAcno" type="text" class="form-control mt-2" id="rac"
+        placeholder="Recepient Account Number" name="pn1">
+      <div *ngIf="this.moneyTransferForm.get('rAcno')?.errors&&moneyTransferForm.get('rAcno')?.touched">
+        <p class="text-danger">please provide numbers</p>
+      </div>
+      <input formControlName="amount" type="text" class="form-control mt-2" id="amnt" placeholder="amount " name="pn2">
+
+      <div *ngIf="this.moneyTransferForm.get('amount')?.errors&&moneyTransferForm.get('amount')?.touched">
+        <p class="text-danger">please provide numbers</p>
+      </div>
+
+      <input formControlName="psw" type="text" class="form-control mt-2" id="ps" placeholder="password" name="pn3">
+      <div *ngIf="this.moneyTransferForm.get('psw')?.errors&&moneyTransferForm.get('psw')?.touched">
+        <p class="text-danger">include numbers and charactors</p>
+      </div>
+
+      <button (click)="moneyTransfer()" style="background-color: rgb(230, 57, 164); color: white;" type="submit"
+        class="btn btn-outline-dark mt-3 mb-4">Send Money</button>
+
+
+    </form>
+  </div>
+</div>
+
+<!---view profile modal-->
+
+<div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title" id="offcanvasExampleLabel">offcanvas</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body">
+    <div>
+      Some text as placeholder. In real life you can have the elements you have chosen. Like, text, images,
+      lists, etc.
+    </div>
+    <div class="dropdown mt-3">
+      <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
+        Dropdown button
+      </button>
+      <ul class="dropdown-menu">
+        <li><a class="dropdown-item" href="#">Action</a></li>
+        <li><a class="dropdown-item" href="#">Another action</a></li>
+        <li><a class="dropdown-item" href="#">Something else here</a></li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="profileModal" tabindex="-1" aria-labelledby="profileModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header bg-secondary">
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+
+      <div class="modal-body bg-dark text-white">
+        <div><i class="fa-solid fa-user"></i></div>
+        <div class="row">
+          <div class="col-6 text-info">
+            <h5 class="modal-title fs-5" id="blanceCheckLabel">user Name</h5>
+            <hr>
+            <h5 class="modal-title fs-5" id="blanceCheckLabel">Account Number</h5>
+          </div>
+          <div class="col-6">
+            <h3>{{name}}</h3>
+            <hr>
+            <h3>{{acno}}</h3>
+          </div>
+
+        </div>
+        <div class="modal-footer bg-dark">
+          <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+
+        </div>
+      </div>
+    </div>
+  </div>

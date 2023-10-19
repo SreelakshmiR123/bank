@@ -1,0 +1,10 @@
+.s1{
+    color: green;
+}
+.s2{
+    color: red;
+}
+.c2{
+    /* visibility: hidden; */
+    display: none;
+}
